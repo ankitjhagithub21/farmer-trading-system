@@ -49,3 +49,13 @@ export const getAdmin = async (req, res) => {
         res.status(500).json({ success: false, message: "Internal server error" })
     }
 }
+
+export const logout = (req, res) => {
+    res.clearCookie("token",{
+        maxAge:0,
+        httpOnly: true,
+        secure:true,
+        sameSite:"none"
+    });
+    res.status(200).json({ success: true, message: "Logout successful" });
+}

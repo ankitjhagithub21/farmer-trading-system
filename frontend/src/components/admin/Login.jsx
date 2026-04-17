@@ -29,7 +29,7 @@ const Login = () => {
       const data = await response.json()
       if (data.success) {
         toast.success('Login successful!')
-        setAdmin(data.admin)
+        setAdmin(data.data)
         navigate('/')
       } else {
         toast.error(data.message || 'Login failed')

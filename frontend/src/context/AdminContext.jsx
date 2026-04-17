@@ -13,9 +13,14 @@ export const AdminProvider = ({ children }) => {
         credentials: "include",
       });
       const data = await response.json();
-      setAdmin(data);
+      if (response.ok) {
+        setAdmin(data);
+      } else {
+        setAdmin(null);
+      }
     } catch (error) {
       console.error("Error fetching admin:", error);
+      setAdmin(null);
     } finally {
       setLoading(false);
     }
