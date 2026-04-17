@@ -1,87 +1,90 @@
-import React, { useState, useEffect } from 'react'
-import toast from 'react-hot-toast'
-import { Package, Weight, IndianRupee, ShoppingBag, User } from 'lucide-react'
+import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
+import { Package, Weight, IndianRupee, ShoppingBag, User } from "lucide-react";
 
 const INITIAL_STATE = {
-  farmer: '',
-  productName: '',
-  weight: '',
-  rate: '',
-  bagQuantity: '',
-  material: '',
-  status: 'pending',
-}
+  farmer: "",
+  productName: "",
+  weight: "",
+  rate: "",
+  bagQuantity: "",
+  material: "",
+  status: "pending",
+};
 
 const MATERIALS = [
-  { value: 'makka', label: 'Makka' },
-  { value: 'gehu', label: 'Gehu' },
-  { value: 'dhan', label: 'Dhan' },
-  { value: 'haldi', label: 'Haldi' },
-]
+  { value: "makka", label: "Makka" },
+  { value: "gehu", label: "Gehu" },
+  { value: "dhan", label: "Dhan" },
+  { value: "haldi", label: "Haldi" },
+];
 
 const AddDeal = () => {
-  const [formData, setFormData] = useState(INITIAL_STATE)
-  const [loading, setLoading] = useState(false)
-  const [farmers, setFarmers] = useState([])
-  const [farmersLoading, setFarmersLoading] = useState(false)
+  const [formData, setFormData] = useState(INITIAL_STATE);
+  const [loading, setLoading] = useState(false);
+  const [farmers, setFarmers] = useState([]);
+  const [farmersLoading, setFarmersLoading] = useState(false);
 
   // Fetch farmers on component mount
   useEffect(() => {
     const fetchFarmers = async () => {
-      setFarmersLoading(true)
+      setFarmersLoading(true);
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers`, {
-          credentials: 'include'
-        })
-        const data = await response.json()
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/farmers`,
+          {
+            credentials: "include",
+          },
+        );
+        const data = await response.json();
         if (data.success) {
-          setFarmers(data.data)
+          setFarmers(data.data);
         }
       } catch (error) {
-        console.error('Error fetching farmers:', error)
+        console.error("Error fetching farmers:", error);
       } finally {
-        setFarmersLoading(false)
+        setFarmersLoading(false);
       }
-    }
+    };
 
-    fetchFarmers()
-  }, [])
+    fetchFarmers();
+  }, []);
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prev => ({ ...prev, [name]: value }))
-  }
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/products`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(formData),
-      })
-      const data = await response.json()
+      });
+      const data = await response.json();
       if (data.success) {
-        toast.success('Deal added successfully')
-        setFormData(INITIAL_STATE)
+        toast.success("Deal added successfully");
+        setFormData(INITIAL_STATE);
       } else {
-        toast.error(data.message || 'Failed to add deal')
+        toast.error(data.message || "Failed to add deal");
       }
     } catch (error) {
-      console.error(error)
-      toast.error('Something went wrong')
+      console.error(error);
+      toast.error("Something went wrong");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // Live total calculation
   const total =
     formData.weight && formData.rate
       ? (parseFloat(formData.weight) * parseFloat(formData.rate)).toFixed(2)
-      : null
+      : null;
 
   return (
     <div className="w-full max-w-2xl mx-auto p-6">
@@ -92,8 +95,12 @@ const AddDeal = () => {
             <Package size={20} className="text-warning" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-base-content">Add New Deal</h2>
-            <p className="text-sm text-base-content/60 mt-1">Record a new transaction deal for farmer products</p>
+            <h2 className="text-2xl font-bold text-base-content">
+              Add New Deal
+            </h2>
+            <p className="text-sm text-base-content/60 mt-1">
+              Record a new transaction deal for farmer products
+            </p>
           </div>
         </div>
       </div>
@@ -101,8 +108,13 @@ const AddDeal = () => {
       {/* Form with card styling */}
       <div className=" rounded-2xl border border-base-300 shadow-sm p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
-
-         <div className="form-control">
+          {/* Farmer Selection Section */}
+          <div>
+            <h3 className="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-4 flex items-center gap-2">
+              <div className="w-1 h-4 bg-warning rounded-full"></div>
+              Farmer Selection
+            </h3>
+            <div className="form-control">
               <label className="label py-0 mb-2">
                 <span className="label-text text-sm font-medium">
                   Select Farmer <span className="text-error">*</span>
@@ -117,7 +129,7 @@ const AddDeal = () => {
                 disabled={farmersLoading}
               >
                 <option value="">Choose a farmer from the list</option>
-                {farmers.map(farmer => (
+                {farmers.map((farmer) => (
                   <option key={farmer._id} value={farmer._id}>
                     {farmer.name} - {farmer.mobile}
                   </option>
@@ -132,6 +144,7 @@ const AddDeal = () => {
                 </label>
               )}
             </div>
+          </div>
 
           {/* Product Details Section */}
           <div>
@@ -139,15 +152,20 @@ const AddDeal = () => {
               <div className="w-1 h-4 bg-success rounded-full"></div>
               Product Details
             </h3>
-            
+
             <div className="space-y-4">
               {/* Product Name */}
               <div className="form-control">
                 <label className="label py-0 mb-2">
-                  <span className="label-text text-sm font-medium">Product Name</span>
+                  <span className="label-text text-sm font-medium">
+                    Product Name
+                  </span>
                 </label>
                 <label className="input outline-none flex items-center gap-3 focus-within:border-success focus-within:ring-2 focus-within:ring-success/20 transition-all">
-                  <Package size={16} className="text-base-content/40 shrink-0" />
+                  <Package
+                    size={16}
+                    className="text-base-content/40 shrink-0"
+                  />
                   <input
                     type="text"
                     name="productName"
@@ -163,10 +181,15 @@ const AddDeal = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="form-control">
                   <label className="label py-0 mb-2">
-                    <span className="label-text text-sm font-medium">Weight (kg)</span>
+                    <span className="label-text text-sm font-medium">
+                      Weight (kg)
+                    </span>
                   </label>
                   <label className="input outline-none flex items-center gap-3 focus-within:border-success focus-within:ring-2 focus-within:ring-success/20 transition-all">
-                    <Weight size={16} className="text-base-content/40 shrink-0" />
+                    <Weight
+                      size={16}
+                      className="text-base-content/40 shrink-0"
+                    />
                     <input
                       type="number"
                       name="weight"
@@ -182,10 +205,15 @@ const AddDeal = () => {
 
                 <div className="form-control">
                   <label className="label py-0 mb-2">
-                    <span className="label-text text-sm font-medium">Rate (per kg)</span>
+                    <span className="label-text text-sm font-medium">
+                      Rate (per kg)
+                    </span>
                   </label>
                   <label className="input outline-none flex items-center gap-3 focus-within:border-success focus-within:ring-2 focus-within:ring-success/20 transition-all">
-                    <IndianRupee size={16} className="text-base-content/40 shrink-0" />
+                    <IndianRupee
+                      size={16}
+                      className="text-base-content/40 shrink-0"
+                    />
                     <input
                       type="number"
                       name="rate"
@@ -207,9 +235,13 @@ const AddDeal = () => {
                     <div className="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center">
                       <IndianRupee size={14} className="text-success" />
                     </div>
-                    <span className="text-sm font-medium text-success/80">Estimated Total</span>
+                    <span className="text-sm font-medium text-success/80">
+                      Estimated Total
+                    </span>
                   </div>
-                  <span className="text-lg font-bold text-success">Rs. {total}</span>
+                  <span className="text-lg font-bold text-success">
+                    Rs. {total}
+                  </span>
                 </div>
               )}
             </div>
@@ -221,15 +253,20 @@ const AddDeal = () => {
               <div className="w-1 h-4 bg-info rounded-full"></div>
               Additional Information
             </h3>
-            
+
             <div className="space-y-4">
               {/* Bag Quantity */}
               <div className="form-control">
                 <label className="label py-0 mb-2">
-                  <span className="label-text text-sm font-medium">Bag Quantity</span>
+                  <span className="label-text text-sm font-medium">
+                    Bag Quantity
+                  </span>
                 </label>
                 <label className="input outline-none flex items-center gap-3 focus-within:border-success focus-within:ring-2 focus-within:ring-success/20  transition-all">
-                  <ShoppingBag size={16} className="text-base-content/40 shrink-0" />
+                  <ShoppingBag
+                    size={16}
+                    className="text-base-content/40 shrink-0"
+                  />
                   <input
                     type="number"
                     name="bagQuantity"
@@ -258,15 +295,19 @@ const AddDeal = () => {
                     required
                   >
                     <option value="">Select material type</option>
-                    {MATERIALS.map(m => (
-                      <option key={m.value} value={m.value}>{m.label}</option>
+                    {MATERIALS.map((m) => (
+                      <option key={m.value} value={m.value}>
+                        {m.label}
+                      </option>
                     ))}
                   </select>
                 </div>
 
                 <div className="form-control">
                   <label className="label py-0 mb-2">
-                    <span className="label-text text-sm font-medium">Payment Status</span>
+                    <span className="label-text text-sm font-medium">
+                      Payment Status
+                    </span>
                   </label>
                   <select
                     name="status"
@@ -280,16 +321,6 @@ const AddDeal = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-           {/* Farmer Selection Section */}
-          <div>
-            <h3 className="text-sm font-semibold text-base-content/70 uppercase tracking-wide mb-4 flex items-center gap-2">
-              <div className="w-1 h-4 bg-warning rounded-full"></div>
-              Farmer Selection
-            </h3>
-            
-            
           </div>
 
           {/* Submit Button */}
@@ -312,11 +343,10 @@ const AddDeal = () => {
               )}
             </button>
           </div>
-
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AddDeal
+export default AddDeal;

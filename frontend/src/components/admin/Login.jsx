@@ -29,16 +29,16 @@ const Login = () => {
         payload = { email: formData.email, password: formData.password }
         successMessage = 'Admin login successful!'
       } else {
-        endpoint = `${import.meta.env.VITE_API_URL}/farmers/${formData.mobile}`
-        payload = {}
+        endpoint = `${import.meta.env.VITE_API_URL}/farmers/login`
+        payload = { mobile: formData.mobile }
         successMessage = 'Farmer login successful!'
       }
 
       const response = await fetch(endpoint, {
-        method: loginType === 'admin' ? 'POST' : 'GET',
-        headers: loginType === 'admin' ? { 'Content-Type': 'application/json' } : {},
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: loginType === 'admin' ? JSON.stringify(payload) : undefined,
+        body: JSON.stringify(payload),
       })
       
       const data = await response.json()

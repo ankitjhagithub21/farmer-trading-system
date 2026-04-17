@@ -26,3 +26,16 @@ export const getFarmers = async (req, res) => {
     }
 };
 
+export const login = async (req, res) => {
+    try {
+        const {mobile} = req.body;
+        const farmer = await Farmer.findOne({mobile});
+        if(!farmer){
+            return res.status(400).json({ message: 'Farmer not found', success: false });
+        }
+        res.status(200).json({ data: farmer, success: true });
+    } catch (error) {
+        res.status(500).json({ message: error.message, success: false });
+    }
+};
+

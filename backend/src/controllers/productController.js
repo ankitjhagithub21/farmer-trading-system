@@ -8,7 +8,7 @@ export const addProduct = async (req, res) => {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
         
-        const product = await Farmer.create(req.body);
+        const product = await Product.create(req.body);
         res.json({ data: product, success: true });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });
@@ -27,7 +27,7 @@ export const getAllProducts = async (req, res) => {
 
 export const getDashboardStats = async (req, res) => {
     try {
-        const products = await Product.find();
+        const products = await Product.find().populate('farmer');
         
         // Calculate total deals
         const totalDeals = products.length;
@@ -44,33 +44,32 @@ export const getDashboardStats = async (req, res) => {
         
         // Calculate total weight
         const totalWeight = products
-            .filter(farmer => farmer.weight)
-            .reduce((total, farmer) => total + farmer.weight, 0);
+            .reduce((total, product) => total + (product.weight || 0), 0);
         
         // Count by status
-        const paidDeals = farmers.filter(farmer => farmer.status === 'paid').length;
-        const pendingDeals = farmers.filter(farmer => farmer.status === 'pending').length;
+        const paidDeals = products.filter(product => product.status === 'paid').length;
+        const pendingDeals = products.filter(product => product.status === 'pending').length;
         
         // Count by material
-        const materialStats = farmers.reduce((acc, farmer) => {
-            if (farmer.material) {
-                acc[farmer.material] = (acc[farmer.material] || 0) + 1;
+        const materialStats = products.reduce((acc, product) => {
+            if (product.material) {
+                acc[product.material] = (acc[product.material] || 0) + 1;
             }
             return acc;
         }, {});
         
         // Recent deals (last 5)
-        const recentDeals = farmers
+        const recentDeals = products
             .sort((a, b) => b.createdAt - a.createdAt)
             .slice(0, 5)
-            .map(farmer => ({
-                id: farmer._id,
-                name: farmer.name,
-                material: farmer.material,
-                weight: farmer.weight,
-                rate: farmer.rate,
-                status: farmer.status,
-                createdAt: farmer.createdAt
+            .map(product => ({
+                id: product._id,
+                name: product.farmer?.name || 'Unknown Farmer',
+                material: product.material,
+                weight: product.weight,
+                rate: product.rate,
+                status: product.status,
+                createdAt: product.createdAt
             }));
         
         const dashboardData = {
