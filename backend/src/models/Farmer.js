@@ -15,9 +15,9 @@ const farmerSchema = new mongoose.Schema({
     required: true,
   },
   productName:String,
-  weight:Number,
-  rate:Number,
-  bagQuantity:Number,
+  weight:Number, // 50
+  rate:Number, // 15 rupya
+  bagQuantity:Number, //2 bora
   status:{
     type: String,
     enum: ['pending', 'paid'],

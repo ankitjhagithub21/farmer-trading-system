@@ -1,19 +1,23 @@
 import express from "express";
-import { getAllFarmers, getFarmerByMobile, deleteFarmer, updateFarmer, addFarmer } from "../controllers/farmerController.js";
+import { getAllFarmers, getFarmerByMobile, deleteFarmer, updateFarmer, addFarmer, getDashboardStats } from "../controllers/farmerController.js";
+import { isAdmin } from "../middlewares/isAdmin.js";
 
 const router = express.Router();
 
-router.post("/", addFarmer);
+router.post("/", isAdmin, addFarmer);
 
-router.get("/all", getAllFarmers);
+router.get("/", isAdmin, getAllFarmers);
+
+// DASHBOARD STATS
+router.get("/dashboard/stats", isAdmin, getDashboardStats);
 
 // GET FARMER
-router.get("/:mobile", getFarmerByMobile);
+router.get("/:mobile", isAdmin, getFarmerByMobile);
 
 // DELETE
-router.delete("/:id", deleteFarmer);
+router.delete("/:id", isAdmin, deleteFarmer);
 
 // UPDATE
-router.put("/:id", updateFarmer);
+router.put("/:id", isAdmin, updateFarmer);
 
 export default router;
