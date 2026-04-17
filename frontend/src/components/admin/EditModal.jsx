@@ -22,6 +22,7 @@ const EditModal = ({ farmer, onSave, onClose }) => {
         {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
+          credentials: "include",
           body: JSON.stringify(form),
         }
       )
@@ -71,7 +72,7 @@ const EditModal = ({ farmer, onSave, onClose }) => {
                 name={name}
                 value={form[name] || ''}
                 onChange={handleChange}
-                className="input input-bordered input-sm w-full"
+                className="input outline-none input-sm w-full"
               />
             </div>
           ))}
@@ -85,7 +86,7 @@ const EditModal = ({ farmer, onSave, onClose }) => {
               name="address"
               value={form.address || ''}
               onChange={handleChange}
-              className="input input-bordered input-sm w-full"
+              className="input outline-none input-sm w-full"
             />
           </div>
 
@@ -97,7 +98,7 @@ const EditModal = ({ farmer, onSave, onClose }) => {
               name="status"
               value={form.status || 'unpaid'}
               onChange={handleChange}
-              className="select select-bordered select-sm w-full"
+              className="select outline-none select-sm w-full"
             >
               <option value="paid">Paid</option>
               <option value="unpaid">Unpaid</option>

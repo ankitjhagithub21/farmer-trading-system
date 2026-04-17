@@ -1,6 +1,7 @@
 import Admin from "../models/Admin.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import env from "../config/env.js";
 
 export const login = async (req, res) => {
     try {
@@ -35,6 +36,15 @@ export const login = async (req, res) => {
         }});
 
         
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Internal server error" })
+    }
+}
+
+export const getAdmin = async (req, res) => {
+    try {
+        const admin = await Admin.findById(req.adminId).select("-password");
+        res.status(200).json({ success: true, data: admin });
     } catch (error) {
         res.status(500).json({ success: false, message: "Internal server error" })
     }

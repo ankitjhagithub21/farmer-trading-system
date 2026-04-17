@@ -8,17 +8,19 @@ const Dashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers/dashboard/stats`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers/dashboard/stats`,{
+        credentials: "include"
+      })
       const data = await response.json()
       
       if (data.success) {
         setStats(data.data)
       } else {
-        toast.error('Failed to fetch dashboard stats')
+        console.error('Failed to fetch dashboard stats')
       }
     } catch (error) {
       console.error('Error fetching dashboard stats:', error)
-      toast.error('Error fetching dashboard stats')
+     
     } finally {
       setLoading(false)
     }

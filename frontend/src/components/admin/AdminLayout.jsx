@@ -16,9 +16,7 @@ const AdminLayout = () => {
               </svg>
             </label>
           </div>
-          <div className="flex-1">
-            <h1 className="text-xl font-bold">Farmer Trading System</h1>
-          </div>
+         
         </div>
         
         {/* Main Content */}

@@ -33,8 +33,10 @@ const AddDeal = () => {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+               
             },
+            credentials: 'include',
             body: JSON.stringify(formData)
         })
         const data = await response.json()

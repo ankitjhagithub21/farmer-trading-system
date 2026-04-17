@@ -13,7 +13,9 @@ const List = () => {
 
   const fetchFarmers = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers`,{
+        credentials: "include"
+      })
       const data = await response.json()
       if (data.success) {
         setFarmers(data.data)
@@ -45,7 +47,7 @@ const List = () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/farmers/${id}`,
-        { method: 'DELETE' }
+        { method: 'DELETE', credentials: "include" }
       )
       const data = await response.json()
       if (data.success) {
