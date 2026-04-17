@@ -53,7 +53,7 @@ const Login = () => {
           // Store farmer data in localStorage or context
           localStorage.setItem('farmer', JSON.stringify(data.data))
           // Redirect to farmer dashboard or home
-          navigate('/farmer-dashboard')
+          navigate('/farmer')
         }
       } else {
         toast.error(data.message || 'Login failed')
