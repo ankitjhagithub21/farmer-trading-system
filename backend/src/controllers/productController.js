@@ -1,4 +1,4 @@
-import Farmer from "../models/Product.js";
+import Product from "../models/Product.js";
 
 export const addProduct = async (req, res) => {
     try {
@@ -17,7 +17,7 @@ export const addProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try {
-        const products = await Farmer.find().sort({_id:-1});
+        const products = await Product.find().populate('farmer').sort({_id:-1});
         res.status(200).json({ data: products, success: true });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });
@@ -27,23 +27,23 @@ export const getAllProducts = async (req, res) => {
 
 export const getDashboardStats = async (req, res) => {
     try {
-        const farmers = await Farmer.find();
+        const products = await Product.find();
         
         // Calculate total deals
-        const totalDeals = farmers.length;
+        const totalDeals = products.length;
         
         // Calculate total earnings (weight * rate * bagQuantity for paid deals)
-        const totalEarnings = farmers
-            .filter(farmer => farmer.status === 'paid' && farmer.weight && farmer.rate && farmer.bagQuantity)
-            .reduce((total, farmer) => total + (farmer.weight * farmer.rate * farmer.bagQuantity), 0);
+        const totalEarnings = products
+            .filter(product => product.status === 'paid' && product.weight && product.rate && product.bagQuantity)
+            .reduce((total, product) => total + (product.weight * product.rate * product.bagQuantity), 0);
         
         // Calculate total bag quantity
-        const totalBagQuantity = farmers
-            .filter(farmer => farmer.bagQuantity)
-            .reduce((total, farmer) => total + farmer.bagQuantity, 0);
+        const totalBagQuantity = products
+            .filter(product => product.bagQuantity)
+            .reduce((total, product) => total + product.bagQuantity, 0);
         
         // Calculate total weight
-        const totalWeight = farmers
+        const totalWeight = products
             .filter(farmer => farmer.weight)
             .reduce((total, farmer) => total + farmer.weight, 0);
         
@@ -92,7 +92,7 @@ export const getDashboardStats = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     try {
-        await Farmer.findByIdAndDelete(req.params.id);
+        await Product.findByIdAndDelete(req.params.id);
         res.json({ message: "Product deleted successfully", success: true });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });
@@ -101,7 +101,7 @@ export const deleteProduct = async (req, res) => {
 
 export const updateProduct = async (req, res) => {
     try {
-        const product = await Farmer.findByIdAndUpdate(req.params.id,req.body, { returnDocument: 'after' });
+        const product = await Product.findByIdAndUpdate(req.params.id,req.body, { returnDocument: 'after' });
         res.json({ message: "Product updated successfully", data: product, success: true });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });

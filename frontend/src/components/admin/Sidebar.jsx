@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   {
     section: 'Records',
     links: [
-      { to: '/list', label: 'Farmers list', icon: List },
+      { to: '/list', label: 'All Deals', icon: List },
     ],
   },
 ]

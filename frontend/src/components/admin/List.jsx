@@ -3,58 +3,58 @@ import toast from 'react-hot-toast'
 import { Eye, Pencil, Trash2 } from 'lucide-react'
 import ViewModal from './ViewModal'
 import DeleteModal from './DeleteModal'
-import EditModal from './EditModal'
+import EditDealModal from './EditDealModal'
 
 const List = () => {
-  const [farmers, setFarmers] = useState([])
+  const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
-  const [selectedFarmer, setSelectedFarmer] = useState(null)
+  const [selectedproduct, setSelectedproduct] = useState(null)
   const [activeModal, setActiveModal] = useState(null) // 'view' | 'delete' | 'edit'
 
-  const fetchFarmers = async () => {
+  const fetchproducts = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers`,{
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/products`,{
         credentials: "include"
       })
       const data = await response.json()
       if (data.success) {
-        setFarmers(data.data)
+        setProducts(data.data)
       } else {
-        console.error('Failed to fetch farmers')
+        console.error('Failed to fetch products')
       }
     } catch (error) {
-      console.error('Error fetching farmers:', error)
+      console.error('Error fetching products:', error)
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    fetchFarmers()
+    fetchproducts()
   }, [])
 
-  const openModal = (type, farmer) => {
-    setSelectedFarmer(farmer)
+  const openModal = (type, product) => {
+    setSelectedproduct(product)
     setActiveModal(type)
   }
 
   const closeModal = () => {
-    setSelectedFarmer(null)
+    setSelectedproduct(null)
     setActiveModal(null)
   }
 
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/farmers/${id}`,
+        `${import.meta.env.VITE_API_URL}/products/${id}`,
         { method: 'DELETE', credentials: "include" }
       )
       const data = await response.json()
       if (data.success) {
-        setFarmers((prev) => prev.filter((f) => f._id !== id))
-        toast.success('Farmer deleted successfully')
+        setProducts((prev) => prev.filter((f) => f._id !== id))
+        toast.success('product deleted successfully')
       } else {
-        toast.error('Failed to delete farmer')
+        toast.error('Failed to delete product')
       }
     } catch (err) {
       console.error(err)
@@ -63,7 +63,7 @@ const List = () => {
   }
 
   const handleSave = () => {
-    fetchFarmers();
+    fetchproducts();
   }
 
   if (loading) {
@@ -76,11 +76,10 @@ const List = () => {
 
   return (
     <div className="overflow-x-auto">
-      <h2 className="text-2xl font-bold mb-6">Farmers List</h2>
 
-      {farmers.length === 0 ? (
+      {products.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-gray-500">No farmers found</p>
+          <p className="text-gray-500">No products found</p>
         </div>
       ) : (
         <table className="table table-zebra w-full">
@@ -99,46 +98,46 @@ const List = () => {
             </tr>
           </thead>
           <tbody>
-            {farmers.map((farmer, index) => (
-              <tr key={farmer._id || index}>
-                <td className="font-medium">{farmer.name}</td>
-                <td>{farmer.fatherName}</td>
-                <td>{farmer.mobile}</td>
-                <td>{farmer.productName || '-'}</td>
-                <td>{farmer.weight || '-'}</td>
-                <td>{farmer.rate || '-'}</td>
-                <td>{farmer.bagQuantity || '-'}</td>
+            {products.map((product, index) => (
+              <tr key={product._id || index}>
+                <td className="font-medium">{product.farmer?.name}</td>
+                <td>{product.farmer?.fatherName}</td>
+                <td>{product.farmer?.mobile}</td>
+                <td>{product.productName || '-'}</td>
+                <td>{product.weight || '-'}</td>
+                <td>{product.rate || '-'}</td>
+                <td>{product.bagQuantity || '-'}</td>
                 <td>
-                  <span className="badge badge-ghost badge-sm">{farmer.material}</span>
+                  <span className="badge badge-ghost badge-sm">{product.material}</span>
                 </td>
                 <td>
                   <span
                     className={`badge badge-sm ${
-                      farmer.status === 'paid' ? 'badge-success' : 'badge-warning'
+                      product.status === 'paid' ? 'badge-success' : 'badge-warning'
                     }`}
                   >
-                    {farmer.status}
+                    {product.status}
                   </span>
                 </td>
                 <td>
                   <div className="flex items-center gap-1">
                     <button
                       className="btn btn-ghost btn-xs text-info"
-                      onClick={() => openModal('view', farmer)}
+                      onClick={() => openModal('view', product)}
                       title="View"
                     >
                       <Eye size={14} />
                     </button>
                     <button
                       className="btn btn-ghost btn-xs text-success"
-                      onClick={() => openModal('edit', farmer)}
+                      onClick={() => openModal('edit', product)}
                       title="Edit"
                     >
                       <Pencil size={14} />
                     </button>
                     <button
                       className="btn btn-ghost btn-xs text-error"
-                      onClick={() => openModal('delete', farmer)}
+                      onClick={() => openModal('delete', product)}
                       title="Delete"
                     >
                       <Trash2 size={14} />
@@ -152,16 +151,16 @@ const List = () => {
       )}
 
       <ViewModal
-        farmer={activeModal === 'view' ? selectedFarmer : null}
+        product={activeModal === 'view' ? selectedproduct : null}
         onClose={closeModal}
       />
       <DeleteModal
-        farmer={activeModal === 'delete' ? selectedFarmer : null}
+        product={activeModal === 'delete' ? selectedproduct : null}
         onConfirm={handleDelete}
         onClose={closeModal}
       />
-      <EditModal
-        farmer={activeModal === 'edit' ? selectedFarmer : null}
+      <EditDealModal
+        product={activeModal === 'edit' ? selectedproduct : null}
         onSave={handleSave}
         onClose={closeModal}
       />

@@ -1,8 +1,8 @@
 
 import { AlertTriangle } from 'lucide-react'
 
-const DeleteModal = ({ farmer, onConfirm, onClose }) => {
-  if (!farmer) return null
+const DeleteModal = ({ product, onConfirm, onClose }) => {
+  if (!product) return null
 
   return (
     <dialog id="modal_delete" className="modal modal-open">
@@ -11,10 +11,10 @@ const DeleteModal = ({ farmer, onConfirm, onClose }) => {
           <div className="bg-warning/20 text-warning rounded-full p-3">
             <AlertTriangle size={24} />
           </div>
-          <h3 className="font-bold text-lg">Delete Farmer?</h3>
+          <h3 className="font-bold text-lg">Are you sure?</h3>
           <p className="text-sm text-base-content/60">
             This will permanently remove{' '}
-            <span className="font-semibold text-base-content">{farmer.name}</span>{' '}
+            <span className="font-semibold text-base-content">{product.productName || 'this product'}</span>{' '}
             and all associated records. This action cannot be undone.
           </p>
         </div>
@@ -26,7 +26,7 @@ const DeleteModal = ({ farmer, onConfirm, onClose }) => {
           <button
             className="btn btn-sm btn-error"
             onClick={() => {
-              onConfirm(farmer._id)
+              onConfirm(product._id)
               onClose()
             }}
           >
