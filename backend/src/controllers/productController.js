@@ -106,3 +106,13 @@ export const updateProduct = async (req, res) => {
         res.status(500).json({ message: error.message, success: false });
     }
 };
+
+export const getFarmerProducts = async (req, res) => {
+    try {
+        const products = await Product.find({ farmer: req.params.id }).populate('farmer');
+        res.json({ data: products, success: true });
+    } catch (error) {
+        res.status(500).json({ message: error.message, success: false });
+    }
+};
+

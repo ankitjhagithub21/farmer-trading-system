@@ -7,4 +7,5 @@ router.get("/", isAdmin, getFarmers);
 router.post("/", isAdmin, addFarmer);
 router.post("/login", login)
 
+
 export default router;
