@@ -8,7 +8,7 @@ const Dashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/farmers/dashboard/stats`,{
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/products/stats`,{
         credentials: "include"
       })
       const data = await response.json()

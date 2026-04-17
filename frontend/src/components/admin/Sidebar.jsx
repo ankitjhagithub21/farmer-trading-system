@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, Plus, List, Home, LogOut } from 'lucide-react'
+import { LayoutDashboard, Plus, List, Home, LogOut, UserPlus } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { useAdmin } from '../../context/AdminContext'
 
@@ -10,6 +10,7 @@ const NAV_ITEMS = [
     links: [
       { to: '/', label: 'Dashboard', icon: LayoutDashboard },
       { to: '/add-deal', label: 'Add deal', icon: Plus },
+      { to: '/add-farmer', label: 'Add farmer', icon: UserPlus },
     ],
   },
   {
