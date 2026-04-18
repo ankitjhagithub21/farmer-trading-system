@@ -44,7 +44,7 @@ const AddFarmer = () => {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-6">
+    <div className="w-full mx-auto p-6">
       {/* Header with gradient background */}
       <div className="bg-gradient-to-r from-success/10 to-info/10 rounded-2xl p-6 mb-6 border border-success/20">
         <div className="flex items-center gap-4">
