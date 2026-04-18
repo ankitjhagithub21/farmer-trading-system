@@ -48,12 +48,12 @@ const Login = () => {
         
         if (loginType === 'admin') {
           setAdmin(data.data)
-          navigate('/')
+          navigate('/admin-dashboard')
         } else {
           // Store farmer data in localStorage or context
           localStorage.setItem('farmer', JSON.stringify(data.data))
           // Redirect to farmer dashboard or home
-          navigate('/farmer')
+          navigate('/farmer-dashboard')
         }
       } else {
         toast.error(data.message || 'Login failed')
