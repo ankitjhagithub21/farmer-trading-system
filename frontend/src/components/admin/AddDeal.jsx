@@ -161,13 +161,6 @@ const AddDeal = () => {
   return (
     <div className="w-full  p-6">
 
-      {/* Page title */}
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold">Add deal</h2>
-        <p className="text-sm text-base-content/50 mt-1">
-          Record a new transaction. Select an existing farmer or add one inline.
-        </p>
-      </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
 

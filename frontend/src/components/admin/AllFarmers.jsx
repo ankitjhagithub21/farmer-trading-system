@@ -91,10 +91,9 @@ const AllFarmers = () => {
                 <tr>
                   <th>Name</th>
                   <th>Mobile</th>
-                  <th>Products</th>
                   <th>Earnings</th>
                   <th>Status</th>
-                  <th>View Earnings</th>
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
@@ -103,11 +102,7 @@ const AllFarmers = () => {
                     <td className="font-medium">{farmer.name}</td>
                     <td>{farmer.mobile}</td>
                   
-                    <td>
-                      <span className="badge badge-ghost badge-sm">
-                        {farmer.productCount || 0}
-                      </span>
-                    </td>
+                    
                     <td>
                       {farmerEarnings[farmer._id] !== undefined ? (
                         <div className="flex items-center gap-1">
