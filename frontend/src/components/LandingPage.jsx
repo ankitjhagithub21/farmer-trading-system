@@ -120,30 +120,18 @@ const LandingPage = () => {
           </p>
 
           <div className="flex items-center justify-center gap-4 mb-16">
-            <button className="btn btn-success btn-lg text-sm shadow-lg">
+            <button className="btn btn-success lg:btn-lg btn-sm text-sm shadow-lg">
               
               <Phone size={16} />
               9631089689
             </button>
-            <button className="btn btn-outline bg-white btn-lg text-sm shadow-lg">
+            <button className="btn btn-outline bg-white lg:btn-lg btn-sm text-sm shadow-lg">
               <Mail size={16} />
               rkm913597@gmail.com
             </button>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-3 max-w-md mx-auto border border-white/20 rounded-2xl overflow-hidden divide-x divide-white/20 bg-white/10 backdrop-blur-sm">
-            {[
-              { num: '2,400+', label: 'Deals recorded' },
-              { num: '18L+', label: 'Total traded' },
-              { num: '99%', label: 'Payment accuracy' },
-            ].map(s => (
-              <div key={s.label} className="py-4 text-center">
-                <p className="text-2xl font-bold text-white">{s.num}</p>
-                <p className="text-xs text-white/80 mt-0.5">{s.label}</p>
-              </div>
-            ))}
-          </div>
+         
 
           {/* Image Indicators */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2">
