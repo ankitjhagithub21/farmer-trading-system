@@ -6,6 +6,7 @@ import List from './components/admin/List'
 import Dashboard from './components/admin/Dashboard'
 import Login from './components/admin/Login'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+import AllFarmers from './components/admin/AllFarmers'
 
 import FarmerLayout from './components/farmer/FarmerLayout'
 import FarmerHome from './components/farmer/FarmerHome'
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="list" element={<List />} />
             <Route path="add-deal" element={<AddDeal />} />
             <Route path="add-farmer" element={<AddFarmer />} />
+            <Route path="all-farmers" element={<AllFarmers />} />
           </Route>
 
           {/* Protected Farmer Routes */}

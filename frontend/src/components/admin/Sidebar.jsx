@@ -17,6 +17,7 @@ const NAV_ITEMS = [
     section: 'Records',
     links: [
       { to: '/admin-dashboard/list', label: 'All Deals', icon: List },
+      { to: '/admin-dashboard/all-farmers', label: 'All Farmers', icon: UserPlus },
     ],
   },
 ]
