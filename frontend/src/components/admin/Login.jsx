@@ -221,14 +221,7 @@ const Login = () => {
             )}
           </button>
 
-          {/* Default credentials hint for admin */}
-          {loginType === 'admin' && (
-            <div className="text-center mt-4">
-              <p className="text-xs text-base-content/50">
-                Default: admin@mail.com / 123456
-              </p>
-            </div>
-          )}
+         
         </form>
       </div>
     </div>
