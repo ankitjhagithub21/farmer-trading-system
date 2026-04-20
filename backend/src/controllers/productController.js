@@ -17,8 +17,27 @@ export const addProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find().populate('farmer').sort({_id:-1});
-        res.status(200).json({ data: products, success: true });
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+        const [products, total] = await Promise.all([
+            Product.find().skip(skip).limit(limit).populate('farmer').sort({ _id: -1 }),
+            Product.countDocuments()
+        ]);
+
+        res.status(200).json({
+            data: products,
+            pagination: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+                hasNextPage: page < Math.ceil(total / limit),
+                hasPrevPage: page > 1
+            },
+            success: true
+        });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });
     }
