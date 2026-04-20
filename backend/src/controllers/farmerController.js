@@ -20,8 +20,30 @@ export const addFarmer = async (req, res) => {
 
 export const getFarmers = async (req, res) => {
     try {
-        const farmers = await Farmer.find();
-        res.status(200).json({ data: farmers, success: true });
+        
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+
+         const [farmers, total] = await Promise.all([
+            Farmer.find().skip(skip).limit(limit),
+            Farmer.countDocuments()
+        ]);
+
+      
+         res.status(200).json({
+            data: farmers,
+            pagination: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+                hasNextPage: page < Math.ceil(total / limit),
+                hasPrevPage: page > 1
+            },
+            success: true
+        });
+
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });
     }

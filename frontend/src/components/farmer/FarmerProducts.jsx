@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Eye, Pencil, Trash2 } from 'lucide-react'
+
 
 
 const FarmerProducts = () => {
@@ -28,16 +28,7 @@ const FarmerProducts = () => {
     fetchproducts()
   }, [])
 
-  const openModal = (type, product) => {
-    setSelectedproduct(product)
-    setActiveModal(type)
-  }
-
-  const closeModal = () => {
-    setSelectedproduct(null)
-    setActiveModal(null)
-  }
-
+ 
 
   if (loading) {
     return (
