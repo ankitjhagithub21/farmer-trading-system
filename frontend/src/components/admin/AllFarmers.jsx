@@ -57,6 +57,10 @@ const AllFarmers = () => {
     columnHelper.accessor('mobile', {
       header: 'Mobile',
     }),
+     columnHelper.accessor('address', {
+      header: 'Address',
+      cell: ({ getValue }) => <div className="line-clamp-2 w-[180px]">{getValue()}</div>
+    }),
     columnHelper.display({
       id: 'earnings',
       header: 'Earnings',
