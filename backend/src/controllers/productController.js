@@ -1,5 +1,5 @@
 import Product from "../models/Product.js";
-import { uploadToCloudinary } from "../utils/cloudinary.js";
+import { uploadToCloudinary, deleteFromCloudinary } from "../utils/cloudinary.js";
 
 export const addProduct = async (req, res) => {
     try {
@@ -11,7 +11,7 @@ export const addProduct = async (req, res) => {
         
         if(req.file){
             const receipt = await uploadToCloudinary(req.file.path);
-            console.log(receipt);
+           
             if(!receipt){
                 return res.status(500).json({ message: "Failed to upload receipt", success: false });
             }
@@ -124,6 +124,10 @@ export const getDashboardStats = async (req, res) => {
 
 export const deleteProduct = async (req, res) => {
     try {
+        const product = await Product.findById(req.params.id);
+        if (product?.receipt?.public_id) {
+            await deleteFromCloudinary(product.receipt.public_id);
+        }
         await Product.findByIdAndDelete(req.params.id);
         res.json({ message: "Product deleted successfully", success: true });
     } catch (error) {

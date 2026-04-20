@@ -11,8 +11,6 @@ cloudinary.config({
 export const uploadToCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null;
-
-        console.log("Local file path", localFilePath)
         const res = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto",
             folder: "farmer-trading-system",
@@ -22,8 +20,19 @@ export const uploadToCloudinary = async (localFilePath) => {
         return res;
 
     } catch (error) {
-        console.log("Error", error)
         fs.unlinkSync(localFilePath)
+        return null;
+    }
+}
+
+
+export const deleteFromCloudinary = async (publicId) => {
+    try {
+        if (!publicId) return null;
+        
+        const res = await cloudinary.uploader.destroy(publicId);
+        return res;
+    } catch (error) {
         return null;
     }
 }
