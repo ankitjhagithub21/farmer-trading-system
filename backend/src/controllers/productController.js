@@ -1,4 +1,5 @@
 import Product from "../models/Product.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 export const addProduct = async (req, res) => {
     try {
@@ -8,7 +9,20 @@ export const addProduct = async (req, res) => {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
         
+        if(req.file){
+            const receipt = await uploadToCloudinary(req.file.path);
+            console.log(receipt);
+            if(!receipt){
+                return res.status(500).json({ message: "Failed to upload receipt", success: false });
+            }
+            req.body.receipt = {
+                url:receipt.url,
+                public_id:receipt.public_id
+            };
+        }
+
         const product = await Product.create(req.body);
+
         res.json({ data: product, success: true });
     } catch (error) {
         res.status(500).json({ message: error.message, success: false });

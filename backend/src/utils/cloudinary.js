@@ -8,18 +8,21 @@ cloudinary.config({
     api_secret: env.API_SECRET,
 });
 
-export const handleUpload = async (localFilePath) => {
+export const uploadToCloudinary = async (localFilePath) => {
     try {
         if (!localFilePath) return null;
 
-        const res = await cloudinary.uploader.upload(file, {
+        console.log("Local file path", localFilePath)
+        const res = await cloudinary.uploader.upload(localFilePath, {
             resource_type: "auto",
+            folder: "farmer-trading-system",
         });
 
-        console.log("Response from cloudinary", res)
+        fs.unlinkSync(localFilePath)
         return res;
 
     } catch (error) {
+        console.log("Error", error)
         fs.unlinkSync(localFilePath)
         return null;
     }
