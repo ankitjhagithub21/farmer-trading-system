@@ -7,7 +7,7 @@ import {
   createColumnHelper,
 } from '@tanstack/react-table'
 import toast from 'react-hot-toast'
-import { Eye, Pencil, Trash2 } from 'lucide-react'
+import { Eye, Pencil, Trash2, Download } from 'lucide-react'
 import ViewModal from './ViewModal'
 import DeleteModal from './DeleteModal'
 import EditDealModal from './EditDealModal'
@@ -96,6 +96,26 @@ const List = () => {
           {info.getValue()}
         </span>
       ),
+    }),
+    columnHelper.accessor('receipt', {
+      header: 'Receipt',
+      cell: (info) => {
+        const receipt = info.getValue()
+        if (receipt?.url) {
+          return (
+            <a
+              href={receipt.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost btn-xs text-info hover:text-info/80"
+              title="View receipt"
+            >
+              <Download size={14} />
+            </a>
+          )
+        }
+        return <span className="text-base-content/30">-</span>
+      },
     }),
     columnHelper.display({
       id: 'actions',

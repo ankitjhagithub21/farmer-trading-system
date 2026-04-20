@@ -6,6 +6,7 @@ import {
   flexRender,
   createColumnHelper,
 } from '@tanstack/react-table'
+import { Download } from 'lucide-react'
 
 const columnHelper = createColumnHelper()
 const LIMIT = 10
@@ -71,6 +72,26 @@ const FarmerProducts = () => {
           {info.getValue()}
         </span>
       ),
+    }),
+    columnHelper.accessor('receipt', {
+      header: 'Receipt',
+      cell: (info) => {
+        const receipt = info.getValue()
+        if (receipt?.url) {
+          return (
+            <a
+              href={receipt.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost btn-xs text-info hover:text-info/80"
+              title="Download receipt"
+            >
+              <Download size={14} />
+            </a>
+          )
+        }
+        return <span className="text-base-content/30">-</span>
+      },
     }),
   ]
 
