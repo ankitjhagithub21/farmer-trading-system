@@ -6,13 +6,12 @@ const productSchema = new mongoose.Schema({
     ref: 'Farmer',
     required: true
   },
-  productName:String,
   weight:Number, // 50
   rate:Number, // 15 rupya
   bagQuantity:Number, //2 bora
   status:{
     type: String,
-    enum: ['pending', 'paid'],
+    enum: ['pending','due', 'paid'],
     default: 'pending'
   },
   material:{
@@ -23,7 +22,21 @@ const productSchema = new mongoose.Schema({
   receipt:{
      url: String,
      public_id: String
+  },
+  reason:{
+    type:String
+  },
+  duePayment:{
+    type:Number
+  },
+  totalPayment:{
+    type:Number
+  },
+
+  date:{
+     
   }
+
 },{timestamps: true, versionKey: false});
 
 export default mongoose.model("Product", productSchema);

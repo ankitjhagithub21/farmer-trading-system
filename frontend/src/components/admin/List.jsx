@@ -67,10 +67,6 @@ const List = () => {
     }),
     columnHelper.accessor('farmer.fatherName', { header: 'Father Name' }),
     columnHelper.accessor('farmer.mobile', { header: 'Mobile' }),
-    columnHelper.accessor('productName', {
-      header: 'Product',
-      cell: (info) => info.getValue() || '-',
-    }),
     columnHelper.accessor('weight', {
       header: 'Weight (kg)',
       cell: (info) => info.getValue() || '-',

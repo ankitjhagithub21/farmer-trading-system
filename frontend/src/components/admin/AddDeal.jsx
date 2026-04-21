@@ -4,7 +4,6 @@ import { Package, Weight, IndianRupee, ShoppingBag, User, Phone, MapPin, Tag, Ch
 
 const DEAL_INITIAL = {
   farmer: '',
-  productName: '',
   weight: '',
   rate: '',
   bagQuantity: '',
@@ -343,22 +342,7 @@ const AddDeal = () => {
                 </select>
               </div>
 
-              <div className="form-control">
-                <label className="label py-0 mb-1.5">
-                  <span className="label-text text-xs font-medium">Product name</span>
-                </label>
-                <label className="input outline-none flex items-center gap-2.5 focus-within:border-warning focus-within:ring-2 focus-within:ring-warning/20 transition-all">
-                  <Tag size={14} className="text-base-content/40 shrink-0" />
-                  <input
-                    type="text"
-                    name="productName"
-                    value={dealForm.productName}
-                    onChange={handleDealChange}
-                    placeholder="e.g. Fine wheat"
-                    className="grow text-sm bg-transparent outline-none placeholder:text-base-content/30"
-                  />
-                </label>
-              </div>
+              
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
