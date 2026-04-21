@@ -1,26 +1,30 @@
 import  { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
   createColumnHelper,
 } from '@tanstack/react-table'
-import { User, Eye, IndianRupee, Trash2 } from 'lucide-react'
+import { User, Eye, IndianRupee, Trash2, CreditCard } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { fetchEarnings, fetchFarmers, deleteFarmer } from '../../api/farmers'
 import DeleteModal from './DeleteModal'
+
 
 const columnHelper = createColumnHelper()
 
 
 // --- Component ---
 const AllFarmers = () => {
+  const navigate = useNavigate()
   const [page, setPage] = useState(1)
   const [earnings, setEarnings] = useState({})
   const [loadingEarnings, setLoadingEarnings] = useState({})
   const [deleteModal, setDeleteModal] = useState(null)
   const [deleting, setDeleting] = useState(false)
+
   const limit = 10
 
   // TanStack Query — fetch farmers
@@ -121,6 +125,13 @@ const AllFarmers = () => {
               {loadingEarnings[farmerId]
                 ? <span className="loading loading-spinner loading-xs" />
                 : <Eye size={14} />}
+            </button>
+            <button
+              className="btn btn-ghost btn-xs text-warning"
+              onClick={() => navigate(`/admin-dashboard/farmer-payments/${farmerId}`)}
+              title="View Payments"
+            >
+              <CreditCard size={14} />
             </button>
             <button
               className="btn btn-ghost btn-xs text-error"
@@ -229,6 +240,8 @@ const AllFarmers = () => {
         onConfirm={handleDeleteFarmer}
         onClose={closeDeleteModal}
       />
+
+    
     </div>
   )
 }
