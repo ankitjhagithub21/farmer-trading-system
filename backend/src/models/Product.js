@@ -32,10 +32,7 @@ const productSchema = new mongoose.Schema({
   totalPayment:{
     type:Number
   },
-
-  date:{
-     
-  }
+  
 
 },{timestamps: true, versionKey: false});
 
