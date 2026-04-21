@@ -90,7 +90,7 @@ const AllFarmers = () => {
     }),
      columnHelper.accessor('address', {
       header: 'Address',
-      cell: ({ getValue }) => <div className="line-clamp-2 w-[180px]">{getValue()}</div>
+      cell: ({ getValue }) => <div>{getValue()}</div>
     }),
     columnHelper.display({
       id: 'earnings',
@@ -164,7 +164,7 @@ const AllFarmers = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm p-6">
+      <div>
         {farmers.length === 0 ? (
           <div className="text-center py-8">
             <User size={48} className="text-base-content/30 mx-auto mb-4" />

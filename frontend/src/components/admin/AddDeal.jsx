@@ -66,7 +66,7 @@ const StepPill = ({ n, label, color }) => {
 
 /* ─── Card shell ─── */
 const Card = ({ children, className = '' }) => (
-  <div className={`bg-base-100 border border-base-200 rounded-2xl overflow-hidden shadow-sm ${className}`}>
+  <div>
     {children}
   </div>
 )
@@ -183,13 +183,13 @@ const AddDeal = () => {
       : null
 
   return (
-    <div className="w-full pb-8 space-y-3">
+    <div className="w-full space-y-3">
 
       <form onSubmit={handleSubmit} className="space-y-3">
 
         {/* ── Card 1: Farmer ── */}
         <Card>
-          <div className="flex items-center justify-between px-4 py-3.5 border-b border-base-200">
+          <div className="flex items-center justify-between py-3.5 border-b border-base-200">
             <StepPill n="1" label="Select Farmer" color="green" />
             <button
               type="button"
@@ -201,7 +201,7 @@ const AddDeal = () => {
             </button>
           </div>
 
-          <div className="p-4">
+          <div className="">
             <Field label="Farmer" required>
               <select
                 name="farmer"
@@ -220,7 +220,7 @@ const AddDeal = () => {
 
           {/* Inline new farmer */}
           {showInlineFarmer && (
-            <div className="border-t border-info/15 bg-info/5 p-4 space-y-3">
+            <div className="  space-y-3 lg:p-4 py-2 px-0">
               <p className="text-xs font-semibold text-info/80 flex items-center gap-1.5">
                 <User size={11} /> New farmer details
               </p>
@@ -258,11 +258,11 @@ const AddDeal = () => {
 
         {/* ── Card 2: Product ── */}
         <Card>
-          <div className="px-4 py-3.5 border-b border-base-200">
+          <div className="py-3.5 border-b border-base-200">
             <StepPill n="2" label="Product Details" color="amber" />
           </div>
 
-          <div className="p-4 space-y-3">
+          <div className=" space-y-3">
             {/* Material chips */}
             <Field label="Material" required>
               <div className="grid md:grid-cols-2 gap-2 mt-0.5">
@@ -296,7 +296,7 @@ const AddDeal = () => {
 
             {/* Live total */}
             {total && (
-              <div className="flex items-center justify-between bg-success/10 border border-success/20 rounded-xl px-4 py-3">
+              <div className="flex items-center justify-between bg-success/10 border border-success/20 rounded-xl  py-3">
                 <span className="text-xs font-semibold text-success/70 uppercase tracking-wider">Estimated Total</span>
                 <span className="text-lg font-bold text-success">₹ {total}</span>
               </div>
@@ -306,11 +306,11 @@ const AddDeal = () => {
 
         {/* ── Card 3: Packaging & Payment ── */}
         <Card>
-          <div className="px-4 py-3.5 border-b border-base-200">
+          <div className=" py-3.5 border-b border-base-200">
             <StepPill n="3" label="Packaging & Payment" color="blue" />
           </div>
 
-          <div className="p-4 space-y-3">
+          <div className=" space-y-3">
             <div className="grid grid-cols-2 gap-2.5">
               <Field label="Bag qty">
                 <IconInput icon={ShoppingBag} accent="info" type="number" name="bagQuantity" value={dealForm.bagQuantity} onChange={handleDealChange} placeholder="0" min="0" />
