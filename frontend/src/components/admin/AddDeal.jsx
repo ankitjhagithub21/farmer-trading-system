@@ -47,7 +47,7 @@ const IconInput = ({ icon: Icon, accent = 'success', ...props }) => {
     info: 'focus-within:border-info focus-within:ring-info/20',
   }
   return (
-    <label className={`input outline-none flex items-center gap-2.5 focus-within:ring-2 transition-all ${rings[accent]}`}>
+    <label className={`input outline-none  w-full flex items-center gap-2.5 focus-within:ring-2 transition-all ${rings[accent]}`}>
       <Icon size={15} className="text-base-content/35 shrink-0" />
       <input className="grow text-sm bg-transparent outline-none placeholder:text-base-content/25" {...props} />
     </label>
@@ -205,7 +205,7 @@ const AddDeal = () => {
               name="farmer"
               value={dealForm.farmer}
               onChange={handleDealChange}
-              className="select select-bordered text-sm focus:border-success focus:ring-2 focus:ring-success/20 focus:outline-none w-full h-12"
+              className="select outline-none text-sm focus:border-success focus:ring-2 focus:ring-success/20 focus:outline-none w-full h-12"
               disabled={farmersLoading}
             >
               <option value="">{farmersLoading ? 'Loading...' : 'Choose a farmer...'}</option>
@@ -318,7 +318,7 @@ const AddDeal = () => {
                   name="status"
                   value={dealForm.status}
                   onChange={handleDealChange}
-                  className="select select-bordered text-sm focus:border-info focus:ring-2 focus:ring-info/20 focus:outline-none w-full"
+                  className="select outline-none text-sm focus:border-info focus:ring-2 focus:ring-info/20 focus:outline-none w-full"
                 >
                   <option value="pending">⏳ Pending</option>
                   <option value="paid">✅ Paid</option>

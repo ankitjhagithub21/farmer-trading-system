@@ -190,7 +190,6 @@ const FarmerHome = () => {
             <table className="table table-zebra w-full">
               <thead>
                 <tr>
-                  <th>Product Name</th>
                   <th>Material</th>
                   <th>Weight</th>
                   <th>Rate</th>
@@ -202,7 +201,7 @@ const FarmerHome = () => {
               <tbody>
                 {products.map((product, index) => (
                   <tr key={product._id || index}>
-                    <td className="font-medium">{product.productName}</td>
+                    
                     <td>
                       <span className="badge badge-ghost badge-sm capitalize">
                         {product.material}
