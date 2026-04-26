@@ -67,7 +67,7 @@ const LandingPage = () => {
     return () => clearInterval(interval)
   }, [])
   return (
-    <div className="min-h-screen bg-base-100">e
+    <div className="min-h-screen bg-base-100">
 
       {/* ── Navbar ── */}
       <nav className="flex items-center justify-between px-6 py-3.5 border-b border-base-300 bg-base-100 sticky top-0 z-50">
